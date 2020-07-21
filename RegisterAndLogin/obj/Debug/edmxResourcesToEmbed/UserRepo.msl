@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LEARNINGModelStoreContainer" CdmEntityContainer="LEARNINGEntities">
+    <EntitySetMapping Name="LOGINTABLEs">
+      <EntityTypeMapping TypeName="LEARNINGModel.LOGINTABLE">
+        <MappingFragment StoreEntitySet="LOGINTABLE">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+          <ScalarProperty Name="UserEmailID" ColumnName="UserEmailID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

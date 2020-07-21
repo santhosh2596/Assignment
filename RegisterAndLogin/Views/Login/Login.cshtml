@@ -1,0 +1,64 @@
+﻿@model RegisterAndLogin.LOGINTABLE
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>InsertUserDetails</title>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        function validateitems() {
+            $.ajax(
+                {
+                    url: "/token",
+                    type: "POST",
+                    data: $.param({ grant_type: 'password', username: $("#uName").val(), password: $("#uPwd").val() }),
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    success: function (resp) {
+                        sessionStorage.setItem('userName', resp.UserName);
+                        sessionStorage.setItem('accessToken', resp.access_token);
+                        var authHeaders = {};
+                        authHeaders.Authorization = 'Bearer ' + resp.access_token;
+                        $.ajax({
+                            url: "https://localhost:44368/api/values",
+                            type: "GET",
+                            headers: authHeaders,
+                            success: function (response) {
+                                $("#loginEmail").val("");
+                                $("#loginPwd").val("");
+                                $("#msg").text(response);
+                            }
+                        });
+
+                    },
+
+                    error: function () {
+                        alert("Failed Authentication!");
+                        //$("#msg").text("Authentication failed");
+                    }
+                })
+        }
+    </script>
+</head>
+<body>
+    @*@using (Html.BeginForm("ValidateUser", "Login", FormMethod.Post))
+    {*@
+        <table>
+            <tr>
+                <td>User Name:</td>
+                <td>@Html.TextBoxFor(x => x.UserName, new { id = "uName" })</td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td>@Html.TextBoxFor(u => u.UserPassword, new { id = "uPwd" })</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td> <input type="submit" value="Login" id="btnLogin" onclick="validateitems()"  /> </td>
+                @*onclick="location.href='@Url.Action("ValidateUser","login")'"*@
+            </tr>
+        </table>
+    @*}*@
+</body>
+</html>
